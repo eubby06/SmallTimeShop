@@ -9,4 +9,9 @@ class UserRepository implements UserRepositoryInterface, ACLUserInterface
 	{
 		return 'user from repo';
 	}
+
+	public function findByCredentials($credentials)
+	{
+		return 'user';
+	}
 }
