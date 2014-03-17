@@ -6,6 +6,11 @@ class LoginController extends BaseController
 {
 	public function getIndex()
 	{
+		if ( ACL::check() ) 
+		{
+			return Redirect::route('dashboard');
+		}
+
 		return View::make('backend.login')->with('message', Session::get('message'));
 	}
 
@@ -21,7 +26,7 @@ class LoginController extends BaseController
 
 		$loginAttempt = ACL::authenticate($credentials, $remember, $redirectRoute);
 
-		if ($loginAttempt) 
+		if ( $loginAttempt ) 
 		{
 			return Redirect::route('dashboard')->with('message', 'Welcome Back!');
 		}

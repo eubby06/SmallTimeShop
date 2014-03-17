@@ -8,6 +8,15 @@ class DashboardController extends BaseController
 
 	public function getIndex()
 	{
-		return '<a href="logout">Logout</a> welcome to dashboard';
+		$current = ACL::currentUser();
+
+		if ( ACL::isAdmin() )
+		{
+			return 'yes';
+		}
+
+		return 'nope';
+		
+		//return '<a href="logout">Logout</a> welcome to dashboard';
 	}
 }

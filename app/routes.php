@@ -14,15 +14,19 @@
 
 Route::controller('products', 'SmallTimeShop\Controllers\ProductsController');
 
-Route::get('dashboard', array(
-	'before'	=> 'frisk.user',
-	'as' 		=> 'dashboard',
-	'uses' 		=> 'SmallTimeShop\Controllers\DashboardController@getIndex'
-	));
+Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
+{
+
+	Route::get('dashboard', array(
+		'as' 		=> 'dashboard',
+		'uses' 		=> 'SmallTimeShop\Controllers\DashboardController@getIndex'
+		));
+
+});
 
 Route::get('login', array(
-	'as' 	=> 'get.login',
-	'uses' 	=> 'SmallTimeShop\Controllers\LoginController@getIndex'
+	'as' 		=> 'get.login',
+	'uses' 		=> 'SmallTimeShop\Controllers\LoginController@getIndex'
 	));
 
 Route::post('login', array(
@@ -36,3 +40,4 @@ Route::get('logout', array(
 		return ACL::logout('get.login');
 	}
 	));
+

@@ -5,4 +5,5 @@ class PermissionModel extends BaseModel
 	protected $table = "permissions";
 
 	public $timestamps = false;
+
 }

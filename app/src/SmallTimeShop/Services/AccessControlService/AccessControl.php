@@ -41,20 +41,25 @@ class AccessControl implements AccessControlInterface
 
 	public function check()
 	{
-		$userInCookie = Cookie::get('user') ? true : false;
-
-		if ($userInCookie) 
+		if ( $this->isGuest() )
 		{
-			$user = $this->userRepo->findByUsernameAndToken($userInCookie);
+			$userInCookie = Cookie::get('user') ? true : false;
 
-			if ($user instanceOf UserModel) 
+			if ($userInCookie) 
 			{
-				$this->login($user, true);
-				return true;
+				$user = $this->userRepo->findByUsernameAndToken($userInCookie);
+
+				if ($user instanceOf UserModel) 
+				{
+					$this->login($user, true);
+					return true;
+				}
 			}
+			
+			return false;	
 		}
 
-		return false;
+		return true;
 	}
 
 	public function authenticate($credentials = array(), $remember = false, $redirect = 'dashboard')
@@ -138,7 +143,26 @@ class AccessControl implements AccessControlInterface
 
 	public function canView(){}
 
-	public function isAdmin(){}
+	public function isAdmin()
+	{
+		$groups = array();
+
+		$user = $this->currentUser();
+
+		foreach($user->groups as $group)
+		{
+				$groups[] = $group->name;
+		}
+
+		$groups = array_flip($groups);
+
+		if(array_key_exists('admin', $groups))
+		{
+			return true;
+		}
+
+		return false;
+	}
 
 	public function isGuest()
 	{
@@ -158,16 +182,19 @@ class AccessControl implements AccessControlInterface
 
 	public function currentUser()
 	{
-		$userInSession = Session::get('user') ? Session::get('user') : false;
-
-		if ($userInSession) 
+		if ( is_null($this->currentUser) )
 		{
-			$user = $this->userRepo->findByUsernameAndToken($userInSession);
+			$userInSession = Session::get('user') ? Session::get('user') : false;
 
-			if ($user instanceOf UserModel) 
+			if ($userInSession) 
 			{
-				$this->currentUser = $user;
-			}
+				$user = $this->userRepo->findByUsernameAndToken($userInSession);
+
+				if ($user instanceOf UserModel) 
+				{
+					$this->currentUser = $user;
+				}
+			}		
 		}
 
 		return $this->currentUser;
