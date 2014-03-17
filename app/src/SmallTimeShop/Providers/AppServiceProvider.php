@@ -1,8 +1,8 @@
 <?php namespace SmallTimeShop\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use SmallTimeShop\Services\AccessControlService\AccessControl;
-use SmallTimeShop\Repositories\UserRepository;
+use SmallTimeShop\Services\AccessControlService as Service;
+use SmallTimeShop\Repositories as Repository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,8 +15,11 @@ class AppServiceProvider extends ServiceProvider
 	
 		$this->app->singleton('ACL', function()
 		{
-			$user = new UserRepository();
-			return new AccessControl($user);
+			$user = new Repository\UserRepository();
+			$group = new Repository\GroupRepository();
+			$permission = new Repository\PermissionRepository();
+
+			return new Service\AccessControl($user, $group, $permission);
 		});
 	}
 }

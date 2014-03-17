@@ -33,6 +33,11 @@ App::after(function($request, $response)
 |
 */
 
+Route::filter('frisk.user', function()
+{
+	if (ACL::isGuest()) return Redirect::route('get.login');
+});
+
 Route::filter('auth', function()
 {
 	if (Auth::guest()) return Redirect::guest('login');

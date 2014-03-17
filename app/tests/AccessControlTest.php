@@ -1,34 +1,79 @@
 <?php
 
-use SmallTimeShop\Services\AccessControlService\AccessControl;
-use SmallTimeShop\Repositories\UserRepository;
-use SmallTimeShop\Models\UserModel;
-
 class AccessControlTest extends TestCase
 {
 
-	public function testIsLoggedInMethodReturnsFalse()
+	public function testACLInContainerMustBeAnInstanceOfAccessControl()
 	{
-		$this->assertFalse(ACL::isLoggedIn());
+		$acl = App::make('ACL');
+
+		$this->assertInstanceOf('SmallTimeShop\Services\AccessControlService\AccessControl', $acl, 'Must be an instance of AccessControl');
 	}
 
-	public function testCheckMethodShouldReturnFalse()
+	public function testUserRepoIsSetAndMustBeInstanceOfUserModel()
 	{
+		$this->assertInstanceOf('SmallTimeShop\Repositories\UserRepository', ACL::userRepo()); 
+	}
+
+	public function testGroupRepoIsSetAndMustBeInstanceOfGroupModel()
+	{
+		$this->assertInstanceOf('SmallTimeShop\Repositories\GroupRepository', ACL::groupRepo());
+	}
+
+	public function testPermissionRepoIsSetAndMustBeInstanceOfGroupModel()
+	{
+		$this->assertInstanceOf('SmallTimeShop\Repositories\PermissionRepository', ACL::permissionRepo());
+	}
+
+	public function testCheckMethodShouldReturnFalseWhenCookieUserIsNotSet()
+	{
+		Cookie::shouldReceive('get')->once()->with('user')->andReturn(false);
+
 		$this->assertFalse(ACL::check());
 	}
 
-	public function testAuthenticateUser()
+	public function testWhenLoginSessionShouldReceivePut()
 	{
-		$credentials = array('username' => 'user', 'password' => 'admin');
+		$user = Mockery::mock('SmallTimeShop\Models\UserModel');
+		$user->shouldReceive('setAttribute')->once();
+		$user->shouldReceive('getAttribute')->once();
+		$user->shouldReceive('save')->once();
 
-		$userModel = Mockery::mock('UserModel');
+		Session::shouldReceive('get')->once()->andReturn(false);
+		Session::shouldReceive('put')->once();
 
-		$user = Mockery::mock('UserRepository');
+		ACL::login($user, false);
+	}
 
-		Hash::shouldReceive('make')->once();
-		
-		//$user->shouldReceive('findByCredentials')->with($credentials)->andReturn($userModel);
+	public function testWhenLoginWithRememberCookieShouldReceiveQueue()
+	{
+		$user = Mockery::mock('SmallTimeShop\Models\UserModel');
+		$user->shouldReceive('setAttribute')->once();
+		$user->shouldReceive('getAttribute')->once();
+		$user->shouldReceive('save')->once();
 
-		ACL::authenticate($credentials, false);
+		Session::shouldReceive('get')->once()->andReturn(false);
+		Session::shouldReceive('put')->once();
+
+		Cookie::shouldReceive('forever')->once();
+		Cookie::shouldReceive('queue')->once();
+
+		ACL::login($user, true);
+	}
+
+	public function testGenerateTokenShouldReturnSomething()
+	{
+		$this->assertEquals('tokencode', ACL::generateToken());
+	}
+
+	public function testWhenLogOutSessionAndCookieShouldReceiveForgetMethod()
+	{
+		Session::shouldReceive('get')->once()->with('user')->andReturn(true);
+		Session::shouldReceive('forget')->with('user')->once();
+
+		Cookie::shouldReceive('get')->once()->with('user')->andReturn(true);
+		Cookie::shouldReceive('forget')->once()->with('user');
+
+		ACL::logout();
 	}
 }

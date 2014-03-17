@@ -3,6 +3,8 @@
 interface AccessControlInterface
 {
 
+	public function check();
+
 	public function authenticate($credentials = array(), $remember = false);
 
 	public function logout();
@@ -22,5 +24,7 @@ interface AccessControlInterface
 	public function isGuest();
 
 	public function isLoggedIn();
+
+	public function currentUser();
 
 }

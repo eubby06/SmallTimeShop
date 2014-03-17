@@ -1,34 +1,55 @@
 <?php namespace SmallTimeShop\Services\AccessControlService;
 
-use Exception, Session, Cookie, Hash;
+use SmallTimeShop\Models\UserModel;
+use Exception, Session, Cookie, Hash, Redirect;
 
 class AccessControl implements AccessControlInterface
 {
 
-	protected $user;
-	protected $group;
-	protected $permission;
+	protected $userRepo;
+	protected $groupRepo;
+	protected $permissionRepo;
 
-	protected $currentUser;
+	protected $currentUser = null;
 	protected $loggedIn = false;
+	protected $cookie = null;
 
-	public function __construct(ACLUserInterface $user)
+	public function __construct(
+		ACLUserInterface $userRepo, 
+		ACLGroupInterface $groupRepo, 
+		ACLPermissionInterface $permissionRepo)
 	{
-		$this->user = $user;
+		$this->userRepo 		= $userRepo;
+		$this->groupRepo 		= $groupRepo;
+		$this->permissionRepo 	= $permissionRepo;
+	}
 
-		$this->check();
+	public function userRepo()
+	{
+		return $this->userRepo;
+	}
+
+	public function groupRepo()
+	{
+		return $this->groupRepo;
+	}
+
+	public function permissionRepo()
+	{
+		return $this->permissionRepo;
 	}
 
 	public function check()
 	{
-		if (Cookie::get('current'))
+		$userInCookie = Cookie::get('user') ? true : false;
+
+		if ($userInCookie) 
 		{
+			$user = $this->userRepo->findByUsernameAndToken($userInCookie);
 
-			$user = $this->user->findByToken(Cookie::get('current'));
-
-			if ($user) 
+			if ($user instanceOf UserModel) 
 			{
-				$this->login($user, $remember);
+				$this->login($user, true);
 				return true;
 			}
 		}
@@ -36,59 +57,74 @@ class AccessControl implements AccessControlInterface
 		return false;
 	}
 
-	public function authenticate($credentials = array(), $remember = false)
+	public function authenticate($credentials = array(), $remember = false, $redirect = 'dashboard')
 	{
-		if (!empty($credentials['username']) AND !empty($credentials['password']))
+		if (empty($credentials['username']) || empty($credentials['password']) )
 		{
-			$credentials['password'] = Hash::make($credentials['password']);
-
-			$user = $this->user->findByCredentials($credentials);
-
-			if ($user) 
-			{
-				$this->login($user, $remember);
-				return $user;
-			}
+			return false;
 		}
 
+		$authenticatedUser = $this->userRepo->findByCredentials($credentials);
+
+		if ($authenticatedUser instanceOf UserModel)
+		{
+			$this->login($authenticatedUser, $remember);
+			
+			return true;
+		}
+		
 		return false;
 	}
 
-	protected function login($user, $remember)
+	//to be protected later
+	public function login(UserModel $user, $remember)
 	{
-		$token = $this->generateToken();
 		$this->currentUser = $user;
 
-		$this->currentUser->loginToken = $token;
-		$this->currentUser->save();
+		$user->token = $this->generateToken();
+		$user->save();
 
-		$sessionCredentials = array(
-			'username' => $this->currentUser->username,
-			'token' 	=> $token
-			);
+		$userInCookie = array('username' => $user->username, 'token' => $user->token);
 
-		Session::put('current', $sessionCredentials);
-
-		if ($remember)
+		if (Session::get('user')) 
 		{
-			Cookie::forever('current', $sessionCredentials);
+			Session::forget('user');
 		}
 
-		$this->loggedIn = true;
+		Session::put('user', $userInCookie);
 
+		if ($remember) 
+		{
+			$cookie = Cookie::forever('user', $userInCookie);
+			Cookie::queue($cookie);
+		}
+		
+		return true;
 	}
 
-	public function logout()
+	public function logout($redirect = false)
 	{
-		$this->loggedIn = false;
-		$this->currentUser = null;
+		if ($this->isLoggedIn())
+		{
+			$this->loggedIn = false;
+		}
 
-		if (Session::forget('current'))
-			Session::forget('current');
+		if (Session::get('user')) 
+		{
+			Session::forget('user');
+		}
 
-		if (Cookie::forget('current'))
-			Cookie::forget('current');
+		if (Cookie::get('user'))
+		{
+			$forgetCookie = Cookie::forget('user');
+			Cookie::queue($forgetCookie);
+		}
 
+		if ($redirect)
+		{
+			return Redirect::route($redirect);
+		}
+		
 		return true;
 	}
 
@@ -104,15 +140,36 @@ class AccessControl implements AccessControlInterface
 
 	public function isAdmin(){}
 
-	public function isGuest(){}
+	public function isGuest()
+	{
+		return $this->currentUser() ? false : true;
+	}
 
 	public function isLoggedIn()
 	{
-		return $this->loggedIn;
+		return $this->currentUser() ? true : false;
 	}
 
-	protected function generateToken()
+	//to be protected later
+	public function generateToken()
 	{
 		return 'tokencode';
+	}
+
+	public function currentUser()
+	{
+		$userInSession = Session::get('user') ? Session::get('user') : false;
+
+		if ($userInSession) 
+		{
+			$user = $this->userRepo->findByUsernameAndToken($userInSession);
+
+			if ($user instanceOf UserModel) 
+			{
+				$this->currentUser = $user;
+			}
+		}
+
+		return $this->currentUser;
 	}
 }

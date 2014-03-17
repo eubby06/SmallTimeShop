@@ -2,5 +2,5 @@
 
 class CategoryModel extends BaseModel
 {
-	
+	protected $table = "categories";
 }

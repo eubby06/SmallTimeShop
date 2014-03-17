@@ -2,6 +2,5 @@
 
 class ProductModel extends BaseModel
 {
-
-	protected $guarded = array('id');
+	protected $table = "products";
 }
