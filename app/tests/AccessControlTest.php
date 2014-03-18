@@ -12,17 +12,17 @@ class AccessControlTest extends TestCase
 
 	public function testUserRepoIsSetAndMustBeInstanceOfUserModel()
 	{
-		$this->assertInstanceOf('SmallTimeShop\Repositories\UserRepository', ACL::userRepo()); 
+		$this->assertInstanceOf('SmallTimeShop\Services\AccessControlService\User\ACLUserProviderInterface', ACL::getUserProvider()); 
 	}
 
 	public function testGroupRepoIsSetAndMustBeInstanceOfGroupModel()
 	{
-		$this->assertInstanceOf('SmallTimeShop\Repositories\GroupRepository', ACL::groupRepo());
+		$this->assertInstanceOf('SmallTimeShop\Services\AccessControlService\Group\ACLGroupProviderInterface', ACL::getGroupProvider());
 	}
 
 	public function testPermissionRepoIsSetAndMustBeInstanceOfGroupModel()
 	{
-		$this->assertInstanceOf('SmallTimeShop\Repositories\PermissionRepository', ACL::permissionRepo());
+		$this->assertInstanceOf('SmallTimeShop\Services\AccessControlService\Permission\ACLPermissionProviderInterface', ACL::getPermissionProvider());
 	}
 
 	public function testCheckMethodShouldReturnFalseWhenCookieUserIsNotSet()
@@ -34,9 +34,10 @@ class AccessControlTest extends TestCase
 
 	public function testWhenLoginSessionShouldReceivePut()
 	{
-		$user = Mockery::mock('SmallTimeShop\Models\UserModel');
+		$user = Mockery::mock('SmallTimeShop\Services\AccessControlService\User\ACLUser');
 		$user->shouldReceive('setAttribute')->once();
 		$user->shouldReceive('getAttribute')->once();
+		$user->shouldReceive('generateToken')->once();
 		$user->shouldReceive('save')->once();
 
 		Session::shouldReceive('get')->once()->andReturn(false);
@@ -47,9 +48,10 @@ class AccessControlTest extends TestCase
 
 	public function testWhenLoginWithRememberCookieShouldReceiveQueue()
 	{
-		$user = Mockery::mock('SmallTimeShop\Models\UserModel');
+		$user = Mockery::mock('SmallTimeShop\Services\AccessControlService\User\ACLUser');
 		$user->shouldReceive('setAttribute')->once();
 		$user->shouldReceive('getAttribute')->once();
+		$user->shouldReceive('generateToken')->once();
 		$user->shouldReceive('save')->once();
 
 		Session::shouldReceive('get')->once()->andReturn(false);
@@ -59,11 +61,6 @@ class AccessControlTest extends TestCase
 		Cookie::shouldReceive('queue')->once();
 
 		ACL::login($user, true);
-	}
-
-	public function testGenerateTokenShouldReturnSomething()
-	{
-		$this->assertEquals('tokencode', ACL::generateToken());
 	}
 
 	public function testWhenLogOutSessionAndCookieShouldReceiveForgetMethod()

@@ -1,42 +1,43 @@
 <?php namespace SmallTimeShop\Services\AccessControlService;
 
-use SmallTimeShop\Models\UserModel;
+use SmallTimeShop\Services\AccessControlService as Provider;
+use SmallTimeShop\Services\AccessControlService\User\ACLUser;
 use Exception, Session, Cookie, Hash, Redirect;
 
-class AccessControl implements AccessControlInterface
+class AccessControl
 {
 
-	protected $userRepo;
-	protected $groupRepo;
-	protected $permissionRepo;
+	protected $userProvider;
+	protected $groupProvider;
+	protected $permissionProvider;
 
 	protected $currentUser = null;
 	protected $loggedIn = false;
 	protected $cookie = null;
 
 	public function __construct(
-		ACLUserInterface $userRepo, 
-		ACLGroupInterface $groupRepo, 
-		ACLPermissionInterface $permissionRepo)
+		Provider\User\ACLUserProviderInterface $userProvider, 
+		Provider\Group\ACLGroupProviderInterface $groupProvider, 
+		Provider\Permission\ACLPermissionProviderInterface $permissionProvider)
 	{
-		$this->userRepo 		= $userRepo;
-		$this->groupRepo 		= $groupRepo;
-		$this->permissionRepo 	= $permissionRepo;
+		$this->userProvider 		= $userProvider;
+		$this->groupProvider 		= $groupProvider;
+		$this->permissionProvider 	= $permissionProvider;
 	}
 
-	public function userRepo()
+	public function getUserProvider()
 	{
-		return $this->userRepo;
+		return $this->userProvider;
 	}
 
-	public function groupRepo()
+	public function getGroupProvider()
 	{
-		return $this->groupRepo;
+		return $this->groupProvider;
 	}
 
-	public function permissionRepo()
+	public function getPermissionProvider()
 	{
-		return $this->permissionRepo;
+		return $this->permissionProvider;
 	}
 
 	public function check()
@@ -47,9 +48,9 @@ class AccessControl implements AccessControlInterface
 
 			if ($userInCookie) 
 			{
-				$user = $this->userRepo->findByUsernameAndToken($userInCookie);
+				$user = $this->userProvider->findByUsernameAndToken($userInCookie);
 
-				if ($user instanceOf UserModel) 
+				if ($user instanceOf ACLUser) 
 				{
 					$this->login($user, true);
 					return true;
@@ -69,9 +70,9 @@ class AccessControl implements AccessControlInterface
 			return false;
 		}
 
-		$authenticatedUser = $this->userRepo->findByCredentials($credentials);
+		$authenticatedUser = $this->userProvider->findByCredentials($credentials);
 
-		if ($authenticatedUser instanceOf UserModel)
+		if ($authenticatedUser instanceOf ACLUser)
 		{
 			$this->login($authenticatedUser, $remember);
 			
@@ -82,11 +83,11 @@ class AccessControl implements AccessControlInterface
 	}
 
 	//to be protected later
-	public function login(UserModel $user, $remember)
+	public function login(ACLUser $user, $remember)
 	{
 		$this->currentUser = $user;
 
-		$user->token = $this->generateToken();
+		$user->token = $user->generateToken();
 		$user->save();
 
 		$userInCookie = array('username' => $user->username, 'token' => $user->token);
@@ -133,37 +134,6 @@ class AccessControl implements AccessControlInterface
 		return true;
 	}
 
-	public function hasPermission(){}
-
-	public function Permissions(){}
-
-	public function canDelete(){}
-
-	public function canAdd(){}
-
-	public function canView(){}
-
-	public function isAdmin()
-	{
-		$groups = array();
-
-		$user = $this->currentUser();
-
-		foreach($user->groups as $group)
-		{
-				$groups[] = $group->name;
-		}
-
-		$groups = array_flip($groups);
-
-		if(array_key_exists('admin', $groups))
-		{
-			return true;
-		}
-
-		return false;
-	}
-
 	public function isGuest()
 	{
 		return $this->currentUser() ? false : true;
@@ -174,12 +144,6 @@ class AccessControl implements AccessControlInterface
 		return $this->currentUser() ? true : false;
 	}
 
-	//to be protected later
-	public function generateToken()
-	{
-		return 'tokencode';
-	}
-
 	public function currentUser()
 	{
 		if ( is_null($this->currentUser) )
@@ -188,9 +152,9 @@ class AccessControl implements AccessControlInterface
 
 			if ($userInSession) 
 			{
-				$user = $this->userRepo->findByUsernameAndToken($userInSession);
+				$user = $this->userProvider->findByUsernameAndToken($userInSession);
 
-				if ($user instanceOf UserModel) 
+				if ($user instanceOf ACLUser) 
 				{
 					$this->currentUser = $user;
 				}

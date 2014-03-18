@@ -1,12 +1,11 @@
-<?php namespace SmallTimeShop\Repositories;
+<?php namespace SmallTimeShop\Services\AccessControlService\User;
 
-use SmallTimeShop\Models\UserModel as User;
-use SmallTimeShop\Services\AccessControlService\ACLUserInterface;
+use SmallTimeShop\Services\AccessControlService\User\ACLUser as User;
 use Hash;
 
-class UserRepository implements UserRepositoryInterface, ACLUserInterface
+class ACLUserProvider implements ACLUserProviderInterface
 {
-	public function find($id)
+	public function findById($id)
 	{
 		return User::find($id);
 	}
@@ -25,10 +24,10 @@ class UserRepository implements UserRepositoryInterface, ACLUserInterface
 
 	public function findByUsernameAndToken($credentials)
 	{
-
 		$user = User::where('username', '=', $credentials['username'])
 		->where('token', '=', $credentials['token'])->first();
 
 		return $user;	
 	}
+
 }
