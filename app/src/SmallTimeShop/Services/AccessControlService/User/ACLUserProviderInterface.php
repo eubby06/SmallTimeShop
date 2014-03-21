@@ -8,4 +8,5 @@ interface ACLUserProviderInterface
 
 	public function findByUsernameAndToken($credentials);
 
+	public function model();
 }

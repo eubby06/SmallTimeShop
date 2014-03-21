@@ -30,4 +30,8 @@ class ACLUserProvider implements ACLUserProviderInterface
 		return $user;	
 	}
 
+	public function model()
+	{
+		return User::model();
+	}
 }

@@ -1,31 +1,18 @@
 <?php namespace SmallTimeShop\Controllers;
 
 use SmallTimeShop\Repositories as Repositories;
-use Event, ACL, Response, Cookie;
+use Event, ACL, Response, Cookie, View;
 
 class ProductsController extends BaseController
 {
-
-	protected $productRepository;
-
-	public function __construct(Repositories\ProductRepositoryInterface $productRepository)
-	{
-		$this->productRepository = $productRepository;
-	}
+	protected $layout = 'backend.layouts.default';
 
 	public function getIndex()
 	{
-		$sessionCredentials = array(
-			'username' => 'admin',
-			'token' 	=> 'tokencode'
-			);
+		$current = ACL::currentUser();
+		
+		$this->layout->content = View::make('backend.products.index');
 
-		$response = Response::make('Hello World');
-		return $response->withCookie(Cookie::forget('current'));
-	}
-
-	public function getTry()
-	{
-		dd(Cookie::get('current'));
+		return $this->layout;
 	}
 }

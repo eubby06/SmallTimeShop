@@ -1,9 +1,11 @@
 <?php namespace SmallTimeShop\Services\Validators;
 
+use Validator;
+
 abstract class AbstractValidator
 {
 	
-	protected $errors 	= array();
+	public $errors 	= array();
 
 	protected $data 	= array();
 
@@ -23,7 +25,7 @@ abstract class AbstractValidator
 
 		if( $validator->fails() )
 		{
-			$this->errors = $validator->messages;
+			$this->errors = $validator->messages();
 			return false;
 		}
 

@@ -1,6 +1,6 @@
 <?php namespace SmallTimeShop\Controllers;
 
-use Controller;
+use Controller, View;
 
 class BaseController extends Controller {
 

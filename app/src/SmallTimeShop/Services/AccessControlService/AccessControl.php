@@ -2,6 +2,7 @@
 
 use SmallTimeShop\Services\AccessControlService as Provider;
 use SmallTimeShop\Services\AccessControlService\User\ACLUser;
+use SmallTimeShop\Services\Validators as Validator;
 use Exception, Session, Cookie, Hash, Redirect;
 
 class AccessControl
@@ -14,6 +15,7 @@ class AccessControl
 	protected $currentUser = null;
 	protected $loggedIn = false;
 	protected $cookie = null;
+	protected $errors = null;
 
 	public function __construct(
 		Provider\User\ACLUserProviderInterface $userProvider, 
@@ -162,5 +164,26 @@ class AccessControl
 		}
 
 		return $this->currentUser;
+	}
+
+	public function register(array $attributes)
+	{
+		$validator = new Validator\UserValidator($attributes);
+
+		if ($validator->passes())
+		{
+			$model = $this->userProvider->model();
+			$result = $model->create($attributes);
+
+			return $result;
+		}
+
+		$this->errors = $validator->errors;
+		return false;
+	}
+
+	public function errors()
+	{
+		return $this->errors;
 	}
 }

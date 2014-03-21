@@ -22,7 +22,27 @@ Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
 		'uses' 		=> 'SmallTimeShop\Controllers\DashboardController@getIndex'
 		));
 
+	Route::get('products', array(
+		'as' 		=> 'dashboard',
+		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getIndex'
+		));
+
 });
+
+Route::get('/', array(
+	'as' 	=> 'front',
+	'uses' 	=> 'SmallTimeShop\Controllers\FrontController@getIndex'
+	));
+
+Route::get('register', array(
+	'as' 	=> 'get.register',
+	'uses'	=> 'SmallTimeShop\Controllers\RegistrationController@getIndex'
+	));
+
+Route::post('register', array(
+	'as' 	=> 'post.register',
+	'uses'	=> 'SmallTimeShop\Controllers\RegistrationController@postIndex'
+	));
 
 Route::get('login', array(
 	'as' 		=> 'get.login',

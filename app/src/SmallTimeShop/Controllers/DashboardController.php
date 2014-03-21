@@ -1,17 +1,18 @@
 <?php namespace SmallTimeShop\Controllers;
 
 use SmallTimeShop\Repositories as Repositories;
-use Event, ACL, Response, Cookie;
+use Event, ACL, Response, Cookie, View;
 
 class DashboardController extends BaseController
 {
+	protected $layout = 'backend.layouts.default';
 
 	public function getIndex()
 	{
 		$current = ACL::currentUser();
 		
-		dd($current->hasPermission('products','delete'));
+		$this->layout->content = View::make('backend.dashboard');
 
-		return '<a href="logout">Logout</a> welcome to dashboard';
+		return $this->layout;
 	}
 }

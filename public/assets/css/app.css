@@ -1,0 +1,134 @@
+body, html{
+  height:100%;
+}
+
+.navbar {
+  margin-bottom:0px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  -khtml-border-radius: 0px;
+}
+
+.navbar-default{
+  background-color:#D8D8D8;
+  border-color:#E0E0E0;
+}
+
+.content{ 
+  margin:0px; 
+  background:#383838;
+  height:100%;
+}
+
+.content .row{
+  height:100%;
+}
+
+.sidebar{
+  color:#909090;
+  padding:0px;
+  margin:0px;
+  background:#383838;
+  height:100%;
+  -webkit-tap-highlight-color: rgba(169,3,41,.5);
+}
+
+.sidebar .title{
+  font-size:14px;
+  padding:10px;
+  background:#484848;
+  border-bottom:1px solid #303030;
+  border-top:1px solid #303030;
+  border-right:1px solid #303030;
+  margin:0px;
+}
+
+.menu {
+  margin:0px;
+  padding:0px;
+}
+
+.menu li{
+  padding:0px;
+}
+
+.menu li:first-child{
+  border-top:1px solid #606060;
+}
+
+.menu li a{
+  display:block;
+  padding:10px;
+  font-size:14px;
+  color:#B0B0B0;
+  text-decoration: none;
+}
+
+.menu li a.active, .menu li a:hover{
+  color:#E8E8E8;
+}
+.menu li a.active{
+   background: url('../images/arrow-36-m.png') no-repeat 100% 40%;
+}
+
+.main .breadcrumbs{
+  font-size:14px;
+  padding:8px;
+  color:#E8E8E8;
+  background:#585858;
+  border-bottom:1px solid #303030;
+  border-left:1px solid #606060;
+  margin:0px;
+}
+
+.main .breadcrumbs a{
+  color:#B0B0B0;
+  text-decoration:none;
+}
+
+.main .breadcrumbs a.active{
+  color:#E8E8E8;
+}
+
+.main{
+  background:#F0F0F0;
+  height:100%;
+  padding:0px;
+}
+
+.display{
+  padding:20px;
+}
+
+.glyphicon{
+  margin-right:10px;
+}
+
+.table-title {
+  margin-left: 0;
+  margin-right: 0;
+  background-color: #E8E8E8;
+  border-width: 1px;
+  border-color: #ddd;
+  border-radius: 6px 6px 0 0;
+  box-shadow: none;
+  padding:20px;
+  font-size:20px;
+  font-weight:bold;
+  -moz-box-shadow:    3px 3px 3px 0px #E0E0E0;
+  -webkit-box-shadow: 3px 3px 3px 0px #E0E0E0;
+  box-shadow:         3px 3px 3px 0px #E0E0E0;
+}
+
+.table-with-title {
+  margin-left: 0;
+  margin-right: 0;
+  background-color: #fff;
+  border-width: 1px;
+  border-color: #ddd;
+  -moz-box-shadow:    3px 3px 3px 0px #E0E0E0;
+  -webkit-box-shadow: 3px 3px 3px 0px #E0E0E0;
+  box-shadow:         3px 3px 3px 0px #E0E0E0;
+
+}

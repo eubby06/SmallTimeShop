@@ -8,6 +8,8 @@ class ACLUser extends Model implements ACLUserInterface
 
 	protected $groupPermissions = array();
 
+	protected $userGroups = array();
+
 	//DEFINE RELATIONSHIPS
 	public function groups()
     {
@@ -19,6 +21,18 @@ class ACLUser extends Model implements ACLUserInterface
 	public function getGroups()
 	{
 		return $this->groups;
+	}
+
+	public function isAdmin()
+	{
+		$this->loadGroupsAndPermissions();
+
+		if (array_key_exists('admin', $this->userGroups))
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 	protected function loadGroupsAndPermissions()
@@ -44,6 +58,7 @@ class ACLUser extends Model implements ACLUserInterface
 		foreach($this->groups as $group)
 		{
 			$groups[] = $group;
+			$userGroups[$group->id] = $group->name;
 
 			if ( $group->permissions->count() )
 			{
@@ -51,6 +66,7 @@ class ACLUser extends Model implements ACLUserInterface
 			}
 		}
 
+		$this->userGroups = array_flip($userGroups);
 		$this->groupPermission = array_shift($permissions);
 	}
 
@@ -97,5 +113,10 @@ class ACLUser extends Model implements ACLUserInterface
 		$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 		return substr(str_shuffle(str_repeat($pool, 5)), 0, $length);
+	}
+
+	public function model()
+	{
+		return self;
 	}
 }

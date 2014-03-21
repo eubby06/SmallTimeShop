@@ -35,7 +35,11 @@ App::after(function($request, $response)
 
 Route::filter('frisk.user', function()
 {
-	if (ACL::isGuest()) return Redirect::route('get.login');
+
+	if ( ACL::isGuest() ) return Redirect::route('get.login');
+
+	if ( ACL::currentUser() && !ACL::currentUser()->isAdmin() ) return Redirect::route('front');
+
 });
 
 Route::filter('auth', function()
