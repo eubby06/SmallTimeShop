@@ -105,7 +105,7 @@ body, html{
   margin-right:10px;
 }
 
-.table-title {
+.form-title {
   margin-left: 0;
   margin-right: 0;
   background-color: #E8E8E8;
@@ -121,7 +121,8 @@ body, html{
   box-shadow:         3px 3px 3px 0px #E0E0E0;
 }
 
-.table-with-title {
+.form-container {
+  padding:20px;
   margin-left: 0;
   margin-right: 0;
   background-color: #fff;

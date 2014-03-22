@@ -1,6 +1,6 @@
 <?php
 
-use SmallTimeShop\Models\GroupModel;
+use SmallTimeShop\Services\AccessControlService\Group\ACLGroup;
 
 class GroupSeeder extends Seeder {
 
@@ -13,13 +13,13 @@ class GroupSeeder extends Seeder {
 	{
         DB::table('groups')->delete();
 
-        GroupModel::create(array(
+        ACLGroup::create(array(
 			'id' 		=> 1,
 			'name' 		=> 'admin',
 			'status' 	=> 1
         	));
 
-       GroupModel::create(array(
+       ACLGroup::create(array(
 			'id' 		=> 2,
 			'name' 		=> 'member',
 			'status' 	=> 1

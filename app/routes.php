@@ -23,10 +23,19 @@ Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
 		));
 
 	Route::get('products', array(
-		'as' 		=> 'dashboard',
+		'as' 		=> 'products',
 		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getIndex'
 		));
 
+	Route::get('products/create', array(
+		'as' 		=> 'products.create',
+		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getCreate'
+		));
+
+	Route::post('products/store', array(
+		'as' 		=> 'products.store',
+		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@postStore'
+		));
 });
 
 Route::get('/', array(

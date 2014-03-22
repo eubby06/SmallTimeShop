@@ -39,6 +39,7 @@ class ACLUser extends Model implements ACLUserInterface
 	{
 		$groups 		= array();
 		$permissions 	= array();
+		$userGroups		= array();
 
 		$callBack = function($groupPermissions) {
 

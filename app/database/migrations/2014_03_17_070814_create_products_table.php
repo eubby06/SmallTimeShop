@@ -16,6 +16,7 @@ class CreateProductsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
+			$table->string('slug');
 			$table->text('description');
 			$table->decimal('price', 5, 2);
 			$table->decimal('discounted_price', 5, 2)->default(null);

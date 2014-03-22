@@ -1,6 +1,6 @@
 <?php
 
-use SmallTimeShop\Models\UserModel;
+use SmallTimeShop\Services\AccessControlService\User\ACLUser;
 
 class UserSeeder extends Seeder {
 
@@ -13,7 +13,7 @@ class UserSeeder extends Seeder {
 	{
         DB::table('users')->delete();
 
-        UserModel::create(array(
+        ACLUser::create(array(
 			'id'			=> 1,
 			'first_name'	=> 'John',
 			'last_name'		=> 'Doe',

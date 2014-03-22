@@ -1,6 +1,6 @@
 <?php
 
-use SmallTimeShop\Models\PermissionModel;
+use SmallTimeShop\Services\AccessControlService\Permission\ACLPermission;
 
 class PermissionSeeder extends Seeder {
 
@@ -13,14 +13,14 @@ class PermissionSeeder extends Seeder {
 	{
         DB::table('permissions')->delete();
 
-        PermissionModel::create(array(
+        ACLPermission::create(array(
 			'id' 		=> 1,
 			'resource' 	=> 'products',
 			'action' 	=> 'create',
 			'value' 	=> 1
         	));
 
-        PermissionModel::create(array(
+        ACLPermission::create(array(
 			'id' 		=> 2,
 			'resource' 	=> 'products',
 			'action' 	=> 'delete',
