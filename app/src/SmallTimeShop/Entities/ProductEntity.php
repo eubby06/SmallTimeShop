@@ -19,4 +19,15 @@ class ProductEntity extends AbstractEntity
 		$this->repository = $productRepository;
 		$this->validator = $productValidator;
 	}
+
+	public function create(array $data)
+	{
+		if( ! $this->validator->with($data)->passes() )
+		{
+			$this->errors = $this->validator->errors();
+			return false;
+		}
+
+		return $this->repository->createWithCategories($data);
+	}
 }

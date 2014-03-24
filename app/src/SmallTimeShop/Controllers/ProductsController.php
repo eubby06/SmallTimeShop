@@ -39,7 +39,7 @@ class ProductsController extends BaseController
 
 		if ( $created )
 		{
-			return 'pass';
+			return Redirect::route('products')->with('success', 'New product has been created.');
 		}
 
 		return Redirect::route('products.create')->withErrors($this->productEntity->errors())->withInput();

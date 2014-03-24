@@ -8,6 +8,9 @@
 		</div>
 		
 	</div>
+	
+	@include('errors.form')
+
 	<div class="form-container">
 		<table class="table table-hover">
 		      <thead>

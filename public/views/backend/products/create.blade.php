@@ -28,12 +28,12 @@
 		<div class="col-md-6">
 			<div class="form-group col-md-6">
 			    <label for="categories">Categories</label>
-				{{ Form::select('categories', array('1' => 'shirts', '2' => 'pants'), Input::old('categories'), array('class' => 'form-control')) }}
+				{{ Form::select('categories[]', array('1' => 'shirts', '2' => 'pants'), Input::old('categories'), array('class' => 'form-control', 'multiple')) }}
 			  </div>
 
 			  <div class="form-group col-md-6">
 			    <label for="type">Type</label>
-				{{ Form::select('type', array('downloadable' => 'Downloadable', 'physical' => 'Physical'), Input::old('type'), array('class' => 'form-control')) }}
+				{{ Form::select('type', array('digital' => 'Digital', 'physical' => 'Physical'), Input::old('type'), array('class' => 'form-control')) }}
 			  </div>
 
 			  <div class="form-group col-md-6">

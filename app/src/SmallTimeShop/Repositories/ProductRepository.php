@@ -1,28 +1,34 @@
 <?php namespace SmallTimeShop\Repositories;
 
-use SmallTimeShop\Models\ProductModel as Product;
+use SmallTimeShop\Models\ProductModel;
 
 class ProductRepository implements ProductRepositoryInterface
 {
+	protected $product;
+
+	public function __construct(ProductModel $product)
+	{
+		$this->product = $product;
+	}
 
 	public function all()
 	{
-		return Product::all();
+		return $this->product->all();
 	}
 	
 	public function find($id)
 	{
-		return Product::find($id)->findOrFail($id);
+		return $this->product->find($id)->findOrFail($id);
 	}
 
 	public function create(array $data)
 	{
-		return Product::create($data);
+		return $this->product->create($data);
 	}
 
 	public function delete($id)
 	{
-		$user = Product::find($id);
+		$user = $this->product->find($id);
 
 		if ($user)
 		{
@@ -54,6 +60,27 @@ class ProductRepository implements ProductRepositoryInterface
 		{
 			unset($item['id']);
 			return $obj->save($item);
+		}
+
+		return false;
+	}
+
+	public function createWithCategories(array $data)
+	{
+		$categories = $data['categories'];
+
+		unset($data['categories']);
+		
+		$product = $this->product->create($data);
+
+		if ( ! empty($data) )
+		{
+			foreach ($categories as $category)
+			{
+				$product->categories()->attach($category);
+			}
+
+			return true;
 		}
 
 		return false;

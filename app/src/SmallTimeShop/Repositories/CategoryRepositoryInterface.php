@@ -1,6 +1,6 @@
 <?php namespace SmallTimeShop\Repositories;
 
-interface ProductRepositoryInterface 
+interface CategoryRepositoryInterface 
 {
 
 	public function all();
@@ -12,6 +12,4 @@ interface ProductRepositoryInterface
 	public function delete($id);
 
 	public function update($id, $data);
-
-	public function createWithCategories(array $data);
 }
