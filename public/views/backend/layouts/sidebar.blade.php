@@ -1,22 +1,13 @@
-@section('sidebar')
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview</a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul>
-        </div>
-@stop
+<div class="sidebar col-md-2">
+    <h1 class="title">Menu</h1>
+    <ul class="menu list-unstyled">
+        <li><a class="active" href="{{ route('dashboard') }}"><span class="glyphicon glyphicon-home"></span>Dashboard</a></li>
+        <li><a href="{{ route('products') }}"><span class="glyphicon glyphicon-barcode"></span>Products</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-list"></span>Categories</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-file"></span>Pages</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-file"></span>Orders</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-usd"></span>Payments</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Configurations</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Users</a></li>
+    </ul>
+</div>

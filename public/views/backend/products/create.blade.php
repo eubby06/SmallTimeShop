@@ -26,16 +26,24 @@
 			  <button type="submit" class="btn btn-default btn-lg">Cancel</button>
 		</div>
 		<div class="col-md-6">
-			  <div class="form-group col-md-6">
-			    <label for="size">Type</label>
-				{{ Form::select('type', array('single' => 'Single', 'parent' => 'Parent'), Input::old('type'), array('class' => 'form-control')) }}
+			<div class="form-group col-md-6">
+			    <label for="categories">Categories</label>
+				{{ Form::select('categories', array('1' => 'shirts', '2' => 'pants'), Input::old('categories'), array('class' => 'form-control')) }}
 			  </div>
 
+			  <div class="form-group col-md-6">
+			    <label for="type">Type</label>
+				{{ Form::select('type', array('downloadable' => 'Downloadable', 'physical' => 'Physical'), Input::old('type'), array('class' => 'form-control')) }}
+			  </div>
 
+			  <div class="form-group col-md-6">
+			    <label for="parent">Parent</label>
+				{{ Form::select('parent', array('0' => 'No', '1' => 'Yes'), Input::old('type'), array('class' => 'form-control')) }}
+			  </div>
 
 			  <div class="form-group col-md-6">
 			    <label for="status">Status</label>
-				{{ Form::select('options', array('1' => 'Enabled', '0' => 'disabled'), Input::old('status'), array('class' => 'form-control')) }}
+				{{ Form::select('status', array('1' => 'Enabled', '0' => 'disabled'), Input::old('status'), array('class' => 'form-control')) }}
 			  </div>
 
 			  <div class="form-group col-md-6">

@@ -1,6 +1,6 @@
 <?php namespace SmallTimeShop\Services\Validators;
 
-use Validator;
+use App;
 
 abstract class AbstractValidator
 {
@@ -9,9 +9,18 @@ abstract class AbstractValidator
 
 	protected $data 	= array();
 
-	public function __construct($data)
+	protected $validator;
+
+
+	public function __construct()
+	{
+		$this->validator = App::make('validator');
+	}
+
+	public function with($data)
 	{
 		$this->data = $data;
+		return $this;
 	}
 
 	public function errors()
@@ -21,7 +30,7 @@ abstract class AbstractValidator
 
 	public function passes()
 	{
-		$validator = Validator::make($this->data, static::$rules);
+		$validator = $this->validator->make($this->data, static::$rules);
 
 		if( $validator->fails() )
 		{

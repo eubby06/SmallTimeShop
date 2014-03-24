@@ -1,22 +1,21 @@
 <?php namespace SmallTimeShop\Controllers;
 
-use SmallTimeShop\Repositories as Repositories;
-use SmallTimeShop\Services\Validators\ProductValidator;
+use SmallTimeShop\Entities as Entity;
 use Event, ACL, Response, Cookie, View, Input, Redirect;
 
 class ProductsController extends BaseController
 {
 	protected $layout = 'backend.layouts.default';
-	protected $productRepository;
+	protected $productEntity;
 
-	public function __construct(Repositories\ProductRepositoryInterface $productRepo)
+	public function __construct(Entity\ProductEntity $productEntity)
 	{
-		$this->productRepository = $productRepo;
+		$this->productEntity = $productEntity;
 	}
 
 	public function getIndex()
 	{		
-		$products = $this->productRepository->all();
+		$products = $this->productEntity->all();
 
 		$this->layout->content = View::make('backend.products.index')
 										->with('products', $products);
@@ -35,13 +34,14 @@ class ProductsController extends BaseController
 	public function postStore()
 	{
 		$attributes = Input::all();
-		$validator = new ProductValidator($attributes);
 
-		if ( $validator->passes() )
+		$created = $this->productEntity->create($attributes);
+
+		if ( $created )
 		{
 			return 'pass';
 		}
 
-		return Redirect::route('products.create')->withErrors($validator->errors())->withInput();
+		return Redirect::route('products.create')->withErrors($this->productEntity->errors())->withInput();
 	}
 }

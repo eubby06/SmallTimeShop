@@ -11,6 +11,7 @@ class AccessControl
 	protected $userProvider;
 	protected $groupProvider;
 	protected $permissionProvider;
+	protected $userValidator;
 
 	protected $currentUser = null;
 	protected $loggedIn = false;
@@ -20,11 +21,13 @@ class AccessControl
 	public function __construct(
 		Provider\User\ACLUserProviderInterface $userProvider, 
 		Provider\Group\ACLGroupProviderInterface $groupProvider, 
-		Provider\Permission\ACLPermissionProviderInterface $permissionProvider)
+		Provider\Permission\ACLPermissionProviderInterface $permissionProvider,
+		Validator\UserValidator $validator)
 	{
 		$this->userProvider 		= $userProvider;
 		$this->groupProvider 		= $groupProvider;
 		$this->permissionProvider 	= $permissionProvider;
+		$this->userValidator 		= $validator;
 	}
 
 	public function getUserProvider()
@@ -168,9 +171,8 @@ class AccessControl
 
 	public function register(array $attributes)
 	{
-		$validator = new Validator\UserValidator($attributes);
 
-		if ($validator->passes())
+		if ($this->userValidator->with($attributes)->passes())
 		{
 			$model = $this->userProvider->model();
 			$result = $model->create($attributes);
@@ -178,7 +180,7 @@ class AccessControl
 			return $result;
 		}
 
-		$this->errors = $validator->errors;
+		$this->errors = $this->userValidator->errors;
 		return false;
 	}
 

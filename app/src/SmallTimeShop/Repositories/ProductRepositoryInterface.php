@@ -7,5 +7,9 @@ interface ProductRepositoryInterface
 
 	public function find($id);
 
-	public function getCurrent();
+	public function create(array $data);
+
+	public function delete($id);
+
+	public function update($id, $data);
 }

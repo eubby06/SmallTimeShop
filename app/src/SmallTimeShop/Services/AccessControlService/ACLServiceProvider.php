@@ -3,6 +3,7 @@
 use Illuminate\Support\ServiceProvider;
 use SmallTimeShop\Services\AccessControlService\AccessControl;
 use SmallTimeShop\Services\AccessControlService as ACLProvider;
+use SmallTimeShop\Services\Validators as Validator;
 
 class ACLServiceProvider extends ServiceProvider
 {
@@ -26,8 +27,9 @@ class ACLServiceProvider extends ServiceProvider
 			$user 		= new ACLProvider\User\ACLUserProvider();
 			$group 		= new ACLProvider\Group\ACLGroupProvider();
 			$permission = new ACLProvider\Permission\ACLPermissionProvider();
+			$validator 	= new Validator\UserValidator();
 
-			return new AccessControl($user, $group, $permission);
+			return new AccessControl($user, $group, $permission, $validator);
 		});
 	}
 }
