@@ -8,9 +8,14 @@ class AppServiceProvider extends ServiceProvider
 
 	public function register()
 	{
+		
 		$this->app->bind(
 			'SmallTimeShop\Repositories\ProductRepositoryInterface', 
 			'SmallTimeShop\Repositories\ProductRepository');
+
+		$this->app->bind(
+			'SmallTimeShop\Repositories\CategoryRepositoryInterface', 
+			'SmallTimeShop\Repositories\CategoryRepository');
 
 	}
 }

@@ -36,6 +36,21 @@ Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
 		'as' 		=> 'products.store',
 		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@postStore'
 		));
+
+	Route::get('products/edit/{id}', array(
+		'as' 		=> 'products.edit',
+		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getEdit'
+		));
+
+	Route::post('products/update/{id}', array(
+		'as' 		=> 'products.update',
+		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@postUpdate'
+		));
+
+	Route::get('products/delete/{id}', array(
+		'as' 		=> 'products.delete',
+		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getDelete'
+		));
 });
 
 Route::get('/', array(

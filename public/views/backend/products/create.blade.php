@@ -23,12 +23,12 @@
 			  </div>
 
 			  <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-			  <button type="submit" class="btn btn-default btn-lg">Cancel</button>
+			   <a href="{{ route('products') }}" class="btn btn-default btn-lg">Cancel</a>
 		</div>
 		<div class="col-md-6">
 			<div class="form-group col-md-6">
 			    <label for="categories">Categories</label>
-				{{ Form::select('categories[]', array('1' => 'shirts', '2' => 'pants'), Input::old('categories'), array('class' => 'form-control', 'multiple')) }}
+				{{ Form::select('categories[]', $categories, Input::old('categories'), array('class' => 'form-control', 'multiple')) }}
 			  </div>
 
 			  <div class="form-group col-md-6">
@@ -64,6 +64,11 @@
 			  <div class="form-group col-md-6">
 			    <label for="size">Size</label>
 			    <input type="text" name="size" class="form-control" placeholder="Enter size" value="{{ Input::old('size') }}">
+			  </div>
+
+			  <div class="form-group col-md-6">
+			    <label for="weight">Weight</label>
+			    <input type="text" name="weight" class="form-control" placeholder="Enter weight" value="{{ Input::old('weight') }}">
 			  </div>
 		</div>
 		

@@ -9,6 +9,12 @@ class ProductValidator extends AbstractValidator
 						'slug'			=> 'required|unique:products',
 						'color'			=> 'required|min:3|max:16',
 						'size' 			=> 'required|min:4|max:12',
-						'price' 		=> 'required|numeric'
+						'price' 		=> 'required|numeric',
+						'weight' 		=> 'required|numeric'
 						);
+
+	public function setIdForUniqueRule($id)
+	{
+		self::$rules['slug'] = 'required|unique:products,slug,' . $id;
+	}
 }

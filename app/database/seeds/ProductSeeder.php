@@ -21,6 +21,7 @@ class ProductSeeder extends Seeder {
 			'price' 			=> 123,
 			'discounted_price' 	=> 112,
 			'color' 			=> 'Green',
+			'weight' 			=> 20,
 			'size' 				=> 'Medium',
 			'type' 				=> 'Single',
 			'status' 			=> 1
@@ -34,7 +35,8 @@ class ProductSeeder extends Seeder {
 			'price' 			=> 353,
 			'discounted_price' 	=> 222,
 			'color' 			=> 'Striped',
-			'size' 				=> 'Large',
+			'weight' 			=> 10,
+			'size' 				=> 'Medium',
 			'type' 				=> 'Single',
 			'status' 			=> 1
         	));
@@ -47,7 +49,8 @@ class ProductSeeder extends Seeder {
 			'price' 			=> 428,
 			'discounted_price' 	=> 315,
 			'color' 			=> 'Blue',
-			'size' 				=> 'Extra Small',
+			'size' 				=> 'Medium',
+			'weight' 			=> 15,
 			'type' 				=> 'Single',
 			'status' 			=> 1
         	));

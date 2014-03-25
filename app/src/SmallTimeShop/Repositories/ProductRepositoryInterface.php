@@ -12,6 +12,4 @@ interface ProductRepositoryInterface
 	public function delete($id);
 
 	public function update($id, $data);
-
-	public function createWithCategories(array $data);
 }

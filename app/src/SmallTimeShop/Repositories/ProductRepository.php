@@ -21,11 +21,6 @@ class ProductRepository implements ProductRepositoryInterface
 		return $this->product->find($id)->findOrFail($id);
 	}
 
-	public function create(array $data)
-	{
-		return $this->product->create($data);
-	}
-
 	public function delete($id)
 	{
 		$user = $this->product->find($id);
@@ -49,23 +44,29 @@ class ProductRepository implements ProductRepositoryInterface
 				if ($obj)
 				{
 					unset($item['id']);
-					return $obj->save($item);
+					return $obj->update($item);
 				}
 			}
 		}
 
 		$obj = $this->find($id);
 
+		$categories = $data['categories'];
+		unset($data['categories']);
+		unset($data['id']);
+
 		if ($obj)
 		{
-			unset($item['id']);
-			return $obj->save($item);
+
+			$obj->categories()->sync($categories);
+
+			return $obj->update($data);
 		}
 
 		return false;
 	}
 
-	public function createWithCategories(array $data)
+	public function create(array $data)
 	{
 		$categories = $data['categories'];
 

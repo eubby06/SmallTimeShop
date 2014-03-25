@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration {
 			$table->decimal('discounted_price', 5, 2)->default(null);
 			$table->string('color');
 			$table->string('size');
+			$table->string('weight');
 			$table->enum('type', array('physical', 'digital'))->default('physical');
 			$table->enum('parent', array('0', '1'))->default(0);
 			$table->enum('status', array('0', '1'))->default(1);

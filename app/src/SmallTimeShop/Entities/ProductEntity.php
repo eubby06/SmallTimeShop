@@ -28,6 +28,19 @@ class ProductEntity extends AbstractEntity
 			return false;
 		}
 
-		return $this->repository->createWithCategories($data);
+		return $this->repository->create($data);
+	}
+
+	public function update($id = null, array $data)
+	{
+		$this->validator->setIdForUniqueRule($id);
+
+		if( ! $this->validator->with($data)->passes() )
+		{
+			$this->errors = $this->validator->errors();
+			return false;
+		}
+
+		return $this->repository->update($id, $data);
 	}
 }
