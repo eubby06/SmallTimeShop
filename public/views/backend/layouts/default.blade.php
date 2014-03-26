@@ -51,5 +51,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     {{ HTML::script('assets/vendor/js/jquery.min.js') }}
     {{ HTML::script('assets/vendor/js/bootstrap.min.js') }}
+    {{ HTML::script('assets/js/imageUploader.js') }}
   </body>
 </html>

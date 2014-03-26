@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use SmallTimeShop\Repositories as Repository;
+use SmallTimeShop\Services\ImageUploader\ImageUploader;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
 		$this->app->bind(
 			'SmallTimeShop\Repositories\CategoryRepositoryInterface', 
 			'SmallTimeShop\Repositories\CategoryRepository');
+
+		$this->app->bind('ImageUploader', function()
+		{
+			return new ImageUPloader();
+		});
 
 	}
 }

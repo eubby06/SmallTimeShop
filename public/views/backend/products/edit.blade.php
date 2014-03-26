@@ -1,5 +1,13 @@
 @section('content')
-	<div class="form-title">Create Product</div>
+	<div class="form-title">
+		Create Product
+
+		<a href="{{ route('photos', $product->id) }}" class="pull-right btn btn-default btn-md">
+  			<span class="glyphicon glyphicon-picture"></span> Manage Photos
+		</a>
+
+	</div>
+
 	<div class="form-container clearfix">
 
 	@include('errors.form')

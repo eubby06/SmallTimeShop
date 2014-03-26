@@ -51,6 +51,16 @@ Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
 		'as' 		=> 'products.delete',
 		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getDelete'
 		));
+
+	Route::get('photos/{id}', array(
+		'as' 		=> 'photos',
+		'uses' 		=> 'SmallTimeShop\Controllers\PhotosController@getIndex'
+		));
+
+	Route::post('photos/upload/{id}', array(
+		'as' 		=> 'photos.upload',
+		'uses' 		=> 'SmallTimeShop\Controllers\PhotosController@postUpload'
+		));
 });
 
 Route::get('/', array(
