@@ -22,6 +22,14 @@ class AppServiceProvider extends ServiceProvider
 			'SmallTimeShop\Repositories\PageRepositoryInterface', 
 			'SmallTimeShop\Repositories\PageRepository');
 
+		$this->app->bind(
+			'SmallTimeShop\Repositories\UserRepositoryInterface', 
+			'SmallTimeShop\Repositories\UserRepository');
+
+		$this->app->bind(
+			'SmallTimeShop\Repositories\GroupRepositoryInterface', 
+			'SmallTimeShop\Repositories\GroupRepository');
+
 		$this->app->bind('ImageUploader', function()
 		{
 			return new ImageUPloader();

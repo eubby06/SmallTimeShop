@@ -16,6 +16,7 @@ class CreateGroupsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
+			$table->integer('parent_id');
 			$table->enum('status', array('0','1'))->default('1');
 		});
 	}
