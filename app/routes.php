@@ -22,6 +22,69 @@ Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
 		'uses' 		=> 'SmallTimeShop\Controllers\DashboardController@getIndex'
 		));
 
+	// ------- PAGES ---------- //
+	Route::get('pages', array(
+		'as' 		=> 'pages',
+		'uses' 		=> 'SmallTimeShop\Controllers\PagesController@getIndex'
+		));
+
+	Route::get('pages/create', array(
+		'as' 		=> 'pages.create',
+		'uses' 		=> 'SmallTimeShop\Controllers\PagesController@getCreate'
+		));
+
+	Route::post('pages/store', array(
+		'as' 		=> 'pages.store',
+		'uses' 		=> 'SmallTimeShop\Controllers\PagesController@postStore'
+		));
+
+	Route::get('pages/edit/{id}', array(
+		'as' 		=> 'pages.edit',
+		'uses' 		=> 'SmallTimeShop\Controllers\PagesController@getEdit'
+		));
+
+	Route::post('pages/update/{id}', array(
+		'as' 		=> 'pages.update',
+		'uses' 		=> 'SmallTimeShop\Controllers\PagesController@postUpdate'
+		));
+
+	Route::get('pages/delete/{id}', array(
+		'as' 		=> 'pages.delete',
+		'uses' 		=> 'SmallTimeShop\Controllers\PagesController@getDelete'
+		));
+
+	// ------- CATEGORIES ---------- //
+	Route::get('categories', array(
+		'as' 		=> 'categories',
+		'uses' 		=> 'SmallTimeShop\Controllers\CategoriesController@getIndex'
+		));
+
+	Route::get('categories/create', array(
+		'as' 		=> 'categories.create',
+		'uses' 		=> 'SmallTimeShop\Controllers\CategoriesController@getCreate'
+		));
+
+	Route::post('categories/store', array(
+		'as' 		=> 'categories.store',
+		'uses' 		=> 'SmallTimeShop\Controllers\CategoriesController@postStore'
+		));
+
+	Route::get('categories/edit/{id}', array(
+		'as' 		=> 'categories.edit',
+		'uses' 		=> 'SmallTimeShop\Controllers\CategoriesController@getEdit'
+		));
+
+	Route::post('categories/update/{id}', array(
+		'as' 		=> 'categories.update',
+		'uses' 		=> 'SmallTimeShop\Controllers\CategoriesController@postUpdate'
+		));
+
+	Route::get('categories/delete/{id}', array(
+		'as' 		=> 'categories.delete',
+		'uses' 		=> 'SmallTimeShop\Controllers\CategoriesController@getDelete'
+		));
+
+	// ------- PRODUCTS ---------- //
 	Route::get('products', array(
 		'as' 		=> 'products',
 		'uses' 		=> 'SmallTimeShop\Controllers\ProductsController@getIndex'

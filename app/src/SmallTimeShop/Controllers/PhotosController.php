@@ -19,7 +19,7 @@ class PhotosController extends BaseController
 		$images = $this->photoEntity->getUploadedImages($id);
 
 		$this->layout->content = View::make('backend.photos.index')
-									->with('id', 4)
+									->with('productId', $id)
 									->with('images', $images);
 
 		return $this->layout;

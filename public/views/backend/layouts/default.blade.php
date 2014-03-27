@@ -12,6 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     {{ HTML::style('assets/vendor/css/bootstrap.min.css') }}
+    {{ HTML::style('assets/vendor/css/jquery-te-1.4.0.css') }}
     {{ HTML::style('assets/css/app.css') }}
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
@@ -28,7 +29,7 @@
 
       <div class="navbar navbar-default">
           <div class="container-fluid">
-              <a href="#" class="logo"><img src="../assets/images/logo.png"></img></a>
+              <a href="#" class="logo"><img src="{{ asset('assets/images/logo.png') }}"></img></a>
           </div>
       </div>
 
@@ -51,6 +52,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     {{ HTML::script('assets/vendor/js/jquery.min.js') }}
     {{ HTML::script('assets/vendor/js/bootstrap.min.js') }}
-    {{ HTML::script('assets/js/imageUploader.js') }}
+    {{ HTML::script('assets/vendor/js/jquery-te-1.4.0.min.js') }}
+    {{ HTML::script('assets/js/uploader.js') }}
+    {{ HTML::script('assets/js/app.js') }}
   </body>
 </html>

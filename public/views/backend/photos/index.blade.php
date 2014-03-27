@@ -1,5 +1,14 @@
 @section('content')
-	<div class="form-title">Product Gallery</div>
+	<div class="form-title">Product Gallery
+
+		<form class="pull-right" id="imageUploader" role="form" action="{{ route('photos.upload', $productId) }}" method="POST" enctype="multipart/form-data">
+
+			<button class="fileInput btn btn-default"/><span class="glyphicon glyphicon-cloud-upload"></span>Upload Images</button>
+			{{ Form::file('image[]', array('multiple', 'class' => 'file')) }}
+			{{ Form::hidden('productId', $productId) }}
+			
+		</form>
+	</div>
 	<div class="form-container clearfix">
 
 	@include('errors.form')
@@ -21,19 +30,6 @@
 		    <span class="percentage">40% Complete (success)</span>
 		  </div>
 	</div>
-
-	<form id="imageUploader" role="form" action="{{ route('photos.upload', $id) }}" method="POST" enctype="multipart/form-data">
-
-		<div class="form-group">
-			    <label for="exampleInputFile">Browse Image to upload</label>
-			    {{ Form::file('image[]', array('multiple')) }}
-			  </div>
-
-			  <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-			   <a href="{{ route('products') }}" class="btn btn-default btn-lg">Cancel</a>
-		</div>
-		
-	</form>
 
 	</div>
 @stop

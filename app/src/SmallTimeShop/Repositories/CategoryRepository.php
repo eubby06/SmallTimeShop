@@ -52,8 +52,8 @@ class CategoryRepository implements CategoryRepositoryInterface
 
 		if ($obj)
 		{
-			unset($item['id']);
-			return $obj->save($item);
+			unset($data['id']);
+			return $obj->update($data);
 		}
 
 		return false;
