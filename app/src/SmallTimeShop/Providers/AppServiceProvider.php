@@ -30,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
 			'SmallTimeShop\Repositories\GroupRepositoryInterface', 
 			'SmallTimeShop\Repositories\GroupRepository');
 
+		$this->app->bind(
+			'SmallTimeShop\Repositories\AttributeRepositoryInterface', 
+			'SmallTimeShop\Repositories\AttributeRepository');
+
+		$this->app->bind(
+			'SmallTimeShop\Repositories\AttributeItemRepositoryInterface', 
+			'SmallTimeShop\Repositories\AttributeItemRepository');
+
 		$this->app->bind('ImageUploader', function()
 		{
 			return new ImageUPloader();

@@ -8,6 +8,8 @@ class ACLUser extends Model implements ACLUserInterface
 
 	protected $groupPermissions = array();
 
+	public $guarded = array('id');
+
 	protected $userGroups = array();
 
 	//DEFINE RELATIONSHIPS
@@ -119,5 +121,17 @@ class ACLUser extends Model implements ACLUserInterface
 	public function model()
 	{
 		return self;
+	}
+
+	public function groupIds()
+	{
+		$ids = array();
+
+		foreach ($this->groups as $group)
+		{
+			$ids[] = $group->id;
+		}
+
+		return $ids;
 	}
 }

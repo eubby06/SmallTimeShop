@@ -22,7 +22,69 @@ Route::group(array('prefix' => 'admin', 'before'	=> 'frisk.user'), function()
 		'uses' 		=> 'SmallTimeShop\Controllers\DashboardController@getIndex'
 		));
 
-	// ------- PAGES ---------- //
+	// ------- ATTRIBUTE ITEMS ---------- //
+	Route::get('attributesItems', array(
+		'as' 		=> 'attributesItems',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesItemsController@getIndex'
+		));
+
+	Route::get('attributesItems/create', array(
+		'as' 		=> 'attributesItems.create',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesItemsController@getCreate'
+		));
+
+	Route::post('attributesItems/store', array(
+		'as' 		=> 'attributesItems.store',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesItemsController@postStore'
+		));
+
+	Route::get('attributesItems/edit/{id}', array(
+		'as' 		=> 'attributesItems.edit',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesItemsController@getEdit'
+		));
+
+	Route::post('attributesItems/update/{id}', array(
+		'as' 		=> 'attributesItems.update',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesItemsController@postUpdate'
+		));
+
+	Route::get('attributesItems/delete/{id}', array(
+		'as' 		=> 'attributesItems.delete',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesItemsController@getDelete'
+		));
+
+	// ------- ATTRIBUTES ---------- //
+	Route::get('attributes', array(
+		'as' 		=> 'attributes',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesController@getIndex'
+		));
+
+	Route::get('attributes/create', array(
+		'as' 		=> 'attributes.create',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesController@getCreate'
+		));
+
+	Route::post('attributes/store', array(
+		'as' 		=> 'attributes.store',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesController@postStore'
+		));
+
+	Route::get('attributes/edit/{id}', array(
+		'as' 		=> 'attributes.edit',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesController@getEdit'
+		));
+
+	Route::post('attributes/update/{id}', array(
+		'as' 		=> 'attributes.update',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesController@postUpdate'
+		));
+
+	Route::get('attributes/delete/{id}', array(
+		'as' 		=> 'attributes.delete',
+		'uses' 		=> 'SmallTimeShop\Controllers\AttributesController@getDelete'
+		));
+
+	// ------- USERS ---------- //
 	Route::get('users', array(
 		'as' 		=> 'users',
 		'uses' 		=> 'SmallTimeShop\Controllers\UsersController@getIndex'

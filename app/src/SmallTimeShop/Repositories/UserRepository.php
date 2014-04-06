@@ -1,6 +1,7 @@
 <?php namespace SmallTimeShop\Repositories;
 
 use SmallTimeShop\Services\AccessControlService\User\ACLUser;
+use Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -47,11 +48,22 @@ class UserRepository implements UserRepositoryInterface
 
 	public function create(array $data)
 	{
-		
+		$groups = $data['groups'];
+
+		unset($data['groups']);
+		unset($data['password_confirmation']);
+
+		$data['password'] = Hash::make($data['password']);
+
 		$user = $this->user->create($data);
 
-		if ( $user )
+		if ($user)
 		{
+			foreach ($groups as $group)
+			{
+				$user->groups()->attach($group);
+			}
+
 			return true;
 		}
 

@@ -51,12 +51,12 @@ class UsersController extends BaseController
 
 	public function getEdit($id)
 	{		
-		$users = array_merge(array('0' => 'None'), $this->userEntity->forForm());
+		$groups = $this->groupEntity->forForm();
 		$user = $this->userEntity->find($id);
 
 		$this->layout->content = View::make('backend.users.edit')
 									->with('user', $user)
-									->with('users', $users);
+									->with('groups', $groups);
 
 		return $this->layout;
 	}

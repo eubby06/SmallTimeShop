@@ -32,7 +32,7 @@ class GroupEntity extends AbstractEntity
 			{
 				if ($group->parent_id == 0)
 				{
-					$newArray[$group->id][0] = $group->name;
+					$newArray[$group->id][$group->id] = $group->name;
 				}
 				else
 				{
@@ -43,9 +43,20 @@ class GroupEntity extends AbstractEntity
 
 		array_walk_recursive($newArray, function(&$item, $key){
 
-			$item = $key == 0 ? $item : '--' . $item;
+			if($item != 'admin' && $item != 'member')
+			{
+				$item = '--' . $item;
+			}
+
 		});
 
-		return call_user_func_array('array_merge', $newArray);
+		$new = array();
+
+		foreach($newArray as $arr)
+		{
+			$new = $new + $arr;
+		}
+
+		return $new;
 	}
 }

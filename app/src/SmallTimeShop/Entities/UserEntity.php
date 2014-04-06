@@ -19,4 +19,5 @@ class UserEntity extends AbstractEntity
 		$this->repository = $userRepository;
 		$this->validator = $userValidator;
 	}
+
 }
